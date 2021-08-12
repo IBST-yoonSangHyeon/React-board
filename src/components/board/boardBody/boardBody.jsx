@@ -5,6 +5,20 @@ import BoardContent from '../boardContent/boardContent';
 
 class BoardBody extends Component {
     render() {
+        const boardList = this.props.boardList;
+        const { field, text } = this.props.search;
+        const filterBoardList = boardList.filter((board) => {
+            if (field !== '') {
+                let boardText = board[field];
+                console.log(boardText);
+                console.log(text);
+                if (boardText.includes(text)) { // 포함하고 있는 문자가 있으면 true를 없으면 false를 반환함
+                    return board;
+                }
+            } else {
+                return board;
+            }
+        })
         return (
             <Table striped bordered hover>
                 <colgroup>
@@ -25,7 +39,7 @@ class BoardBody extends Component {
                 </thead>
                 <tbody>
                     {
-                        this.props.boardList.map((board, index) => <BoardContent key={board.key} index={index + 1} board={board} />)
+                        filterBoardList.map((board, index) => <BoardContent key={board.key} index={index + 1} board={board} />)
                     }
                 </tbody>
             </Table>

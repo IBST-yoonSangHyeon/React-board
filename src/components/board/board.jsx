@@ -28,7 +28,18 @@ class Board extends Component {
             // { key: 19, subject: '제목19', content: '내용19.....,', datetime: '2021-08-12 00:00:02' },
             // { key: 20, subject: '제목20', content: '내용20.....,', datetime: '2021-08-12 00:00:02' },
             // { key: 21, subject: '제목21', content: '내용21.....,', datetime: '2021-08-12 00:00:02' },
-        ]
+        ],
+        search: { field: "", text: "" }
+    }
+
+    handleSearch = (field, text) => {
+        const search = { ...this.state.search };
+        const field_ = field;
+        const text_ = text;
+        search.field = field_;
+        search.text = text_;
+        //console.log('handleSearch => ' + text_);
+        this.setState({ search: search })
     }
 
     render() {
@@ -36,13 +47,13 @@ class Board extends Component {
             <>
                 <Container>
                     <Row>
-                        <BoardBody boardList={this.state.boardData} />
+                        <BoardBody boardList={this.state.boardData} search={this.state.search} />
                     </Row>
                     <Row>
                         <BoardPage />
                     </Row>
                     <Row>
-                        <BoardSearch />
+                        <BoardSearch onSearch={this.handleSearch} />
                     </Row>
                 </Container>
             </>
