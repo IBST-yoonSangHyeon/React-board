@@ -1,21 +1,32 @@
 import './app.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Container, Row } from 'react-bootstrap';
-import Nav from './components/nav';
+import Nav from './components/nav/nav';
+import { Component } from 'react';
+import Board from './components/board/board';
 
 
-function App() {
+class App extends Component {
 
-  return (
-    <Container>
-      <Row>
-        <Nav />
-      </Row>
-      <Row>
-        <Button>Hello World~~!!!</Button>
-      </Row>
-    </Container>
-  );
+
+
+  render() {
+    return (
+      <>
+        <Container>
+          <Row>
+            <Nav />
+          </Row>
+        </Container>
+        <Container>
+          <Row>
+            <Board />
+          </Row>
+        </Container>
+      </>
+    );
+  }
+
 }
 
 export default App;
