@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import styles from './nav.module.css';
 import { Container, Row, Col } from 'react-bootstrap';
 
-class Nav extends Component {
+class Nav extends PureComponent {
     render() {
         return (
             <Container className="p-3 my-3 border ">
