@@ -5,6 +5,7 @@ import Nav from './components/nav/nav';
 import { Component } from 'react';
 import Board from './components/board/board';
 import BoardEdit from './components/board/boardEdit/boardEdit';
+import format from 'date-fns/format'
 
 
 class App extends Component {
@@ -52,6 +53,18 @@ class App extends Component {
     this.setState({ isBoardState: isBoardState })
   }
 
+  handleAddBoard = (subject, content) => {
+    const boardData = [...this.state.boardData];
+    const subject_ = subject;
+    const content_ = content;
+    const dateObj = new Date();
+    const datetime_ = format(dateObj, "yyyy-MM-dd hh:mm:ss") //date-fns format
+    console.log(dateObj);
+    const key_ = Date.now();
+    boardData.push({ key: key_, subject: subject_, content: content_, datetime: datetime_ })
+    this.setState({ boardData: boardData, isBoardState: 'R' })
+  }
+
   render() {
     return (
       <>
@@ -62,7 +75,7 @@ class App extends Component {
         </Container>
         <Container>
           {(this.state.isBoardState === 'R') && <Row><Board boardData={this.state.boardData} search={this.state.search} onSearch={this.handleSearch} onWrite={this.handleWrite} /></Row>}
-          {(this.state.isBoardState === 'W') && <Row><BoardEdit /></Row>}
+          {(this.state.isBoardState === 'W') && <Row><BoardEdit onAddBoard={this.handleAddBoard} /></Row>}
         </Container>
       </>
     );
