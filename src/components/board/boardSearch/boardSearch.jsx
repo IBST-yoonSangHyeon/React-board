@@ -19,6 +19,10 @@ class BoardSearch extends Component {
         this.props.onSearch(field, text);
     }
 
+    handleWrite = () => {
+        this.props.onWrite();
+    }
+
     render() {
         return (
             <Form onSubmit={this.handleOnSubmit}>
@@ -35,6 +39,9 @@ class BoardSearch extends Component {
                     </Col>
                     <Col xs="auto" className="my-1">
                         <Button type="submit">검색</Button>
+                    </Col>
+                    <Col xs="auto" className="my-1">
+                        <Button type="button" className="my-1" variant="danger" onClick={this.handleWrite}>작성</Button>
                     </Col>
                 </Row>
             </Form>
