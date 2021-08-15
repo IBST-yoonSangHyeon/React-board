@@ -16,13 +16,16 @@ class Board extends Component {
     handleWrite = () => {
         this.props.onWrite();
     }
+    handleEditModeBoard = (baord) => {
+        this.props.onEditModeBoard(baord);
+    }
 
     render() {
         return (
             <>
                 <Container>
                     <Row>
-                        <BoardBody boardList={this.props.boardData} search={this.props.search} />
+                        <BoardBody boardList={this.props.boardData} search={this.props.search} onEditModeBoard={this.handleEditModeBoard} />
                     </Row>
                     <Row>
                         <BoardPage />

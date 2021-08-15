@@ -35,7 +35,8 @@ class App extends Component {
       // { key: 21, subject: '제목21', content: '내용21.....,', datetime: '2021-08-12 00:00:02' },
     ],
     search: { field: "", text: "" }, // 검색 상태 
-    isBoardState: 'R', // R : 게시판 리스트, W : 게시판 작성 , V : 게시판 내용 뷰
+    isBoardState: 'R', // R : 게시판 리스트, W : 게시판 작성 , V : 게시판 내용 뷰, U : 게시판 수정
+    editBoard: null,
   }
 
   handleSearch = (field, text) => {
@@ -53,6 +54,13 @@ class App extends Component {
     this.setState({ isBoardState: isBoardState })
   }
 
+  handleEditModeBoard = (board) => {
+    console.log('호출????');
+    const isBoardState = 'U';
+    console.log(board);
+    this.setState({ editBoard: board, isBoardState: isBoardState })
+  }
+
   handleAddBoard = (subject, content) => {
     const boardData = [...this.state.boardData];
     const subject_ = subject;
@@ -65,6 +73,23 @@ class App extends Component {
     this.setState({ boardData: boardData, isBoardState: 'R' })
   }
 
+  handleEditBoard = (board, subject, content) => {
+    const boardData = [...this.state.boardData];
+    console.log(board);
+    const board_ = board;
+    const subject_ = subject;
+    const content_ = content;
+    boardData.map((board) => {
+      if (board.key === board_.key) {
+        board['subject'] = subject_;
+        board['content'] = content_;
+        return board;
+      }
+      return board;
+    });
+    this.setState({ boardData: boardData, isBoardState: 'R' });
+  }
+
   render() {
     return (
       <>
@@ -74,8 +99,8 @@ class App extends Component {
           </Row>
         </Container>
         <Container>
-          {(this.state.isBoardState === 'R') && <Row><Board boardData={this.state.boardData} search={this.state.search} onSearch={this.handleSearch} onWrite={this.handleWrite} /></Row>}
-          {(this.state.isBoardState === 'W') && <Row><BoardEdit onAddBoard={this.handleAddBoard} /></Row>}
+          {(this.state.isBoardState === 'R') && <Row><Board boardData={this.state.boardData} search={this.state.search} onSearch={this.handleSearch} onWrite={this.handleWrite} onEditModeBoard={this.handleEditModeBoard} /></Row>}
+          {(this.state.isBoardState === 'W' || this.state.isBoardState === 'U') && <Row><BoardEdit isBoardState={this.state.isBoardState} editBoard={this.state.editBoard} onAddBoard={this.handleAddBoard} onEditBoard={this.handleEditBoard} /></Row>}
         </Container>
       </>
     );

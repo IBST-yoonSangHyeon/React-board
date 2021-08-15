@@ -4,6 +4,11 @@ import { Table } from 'react-bootstrap';
 import BoardContent from '../boardContent/boardContent';
 
 class BoardBody extends Component {
+    handleEditModeBoard = (baord) => {
+
+        this.props.onEditModeBoard(baord);
+    }
+
     render() {
         const boardList = this.props.boardList;
         const { field, text } = this.props.search;
@@ -40,7 +45,7 @@ class BoardBody extends Component {
                 </thead>
                 <tbody>
                     {
-                        filterBoardList.map((board, index) => <BoardContent key={board.key} index={index + 1} board={board} />)
+                        filterBoardList.map((board, index) => <BoardContent key={board.key} index={index + 1} board={board} onEditModeBoard={this.handleEditModeBoard} />)
                     }
                 </tbody>
             </Table>
