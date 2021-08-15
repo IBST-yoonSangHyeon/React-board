@@ -8,7 +8,7 @@ class BoardBody extends Component {
         const boardList = this.props.boardList;
         const { field, text } = this.props.search;
         const filterBoardList = boardList.filter((board) => {
-            if (field !== '') {
+            if (field !== '') { // 검색이 있다면
                 let boardText = board[field];
                 console.log(boardText);
                 console.log(text);
@@ -18,6 +18,7 @@ class BoardBody extends Component {
             } else {
                 return board;
             }
+            return '';
         })
         return (
             <Table striped bordered hover>
