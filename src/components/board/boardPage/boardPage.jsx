@@ -1,27 +1,30 @@
 import React, { Component } from 'react';
-import styles from './boardPage.module.css';
-import { Pagination } from 'react-bootstrap';
+import Pagination from 'react-js-pagination';
+import './boardPage.css';
+
+
 
 class BoardPage extends Component {
+
+    state = {
+        activePage: 5
+    };
+
+    handlePageChange = (pageNumber) => {
+        this.props.onPageChange(pageNumber);
+    }
+
     render() {
         return (
-            <Pagination>
-                <Pagination.First />
-                <Pagination.Prev />
-                <Pagination.Item>{1}</Pagination.Item>
-                <Pagination.Ellipsis />
-
-                <Pagination.Item>{10}</Pagination.Item>
-                <Pagination.Item>{11}</Pagination.Item>
-                <Pagination.Item active>{12}</Pagination.Item>
-                <Pagination.Item>{13}</Pagination.Item>
-                <Pagination.Item disabled>{14}</Pagination.Item>
-
-                <Pagination.Ellipsis />
-                <Pagination.Item>{20}</Pagination.Item>
-                <Pagination.Next />
-                <Pagination.Last />
-            </Pagination>
+            <>
+                <Pagination
+                    activePage={this.props.activePage}
+                    itemsCountPerPage={this.props.itemsCountPerPage}
+                    totalItemsCount={this.props.totalItemsCount}
+                    pageRangeDisplayed={this.props.pageRangeDisplayed}
+                    onChange={this.handlePageChange}
+                />
+            </>
         );
     }
 }

@@ -5,9 +5,6 @@ import BoardPage from './boardPage/boardPage';
 import BoardSearch from './boardSearch/boardSearch';
 
 class Board extends Component {
-    state = {
-
-    }
 
     handleSearch = (field, text) => {
         this.props.onSearch(field, text);
@@ -20,15 +17,35 @@ class Board extends Component {
         this.props.onEditModeBoard(baord);
     }
 
+    handlePageChange = (pageNumber) => {
+        this.props.onPageChange(pageNumber);
+    }
+
+    handleDelBoard = (baord) => {
+        this.props.onDelBoard(baord);
+    }
+
     render() {
         return (
             <>
                 <Container>
                     <Row>
-                        <BoardBody boardList={this.props.boardData} search={this.props.search} onEditModeBoard={this.handleEditModeBoard} />
+                        <BoardBody
+                            boardList={this.props.boardData}
+                            search={this.props.search}
+                            activePage={ this.props.activePage}
+                            onEditModeBoard={this.handleEditModeBoard}
+                            onDelBoard={ this.handleDelBoard}
+                        />
                     </Row>
                     <Row>
-                        <BoardPage />
+                        <BoardPage
+                            onPageChange={this.handlePageChange}
+                            activePage={this.props.activePage}
+                            itemsCountPerPage={this.props.itemsCountPerPage}
+                            totalItemsCount={this.props.totalItemsCount}
+                            pageRangeDisplayed = {this.props.pageRangeDisplayed}
+                        />
                     </Row>
                     <Row>
                         <Container>

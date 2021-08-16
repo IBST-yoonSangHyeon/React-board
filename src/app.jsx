@@ -37,6 +37,16 @@ class App extends Component {
     search: { field: "", text: "" }, // 검색 상태 
     isBoardState: 'R', // R : 게시판 리스트, W : 게시판 작성 , V : 게시판 내용 뷰, U : 게시판 수정
     editBoard: null,
+    activePage: 1,
+    itemsCountPerPage: 10,
+    totalItemsCount: 0,
+    pageRangeDisplayed: 5,
+  }
+
+  componentDidMount() {
+    const boardDataLength = this.state.boardData.length;
+    console.log(boardDataLength)
+    this.setState({ totalItemsCount: boardDataLength });
   }
 
   handleSearch = (field, text) => {
@@ -70,7 +80,8 @@ class App extends Component {
     console.log(dateObj);
     const key_ = Date.now();
     boardData.push({ key: key_, subject: subject_, content: content_, datetime: datetime_ })
-    this.setState({ boardData: boardData, isBoardState: 'R' })
+    const boardDataLength = boardData.length;
+    this.setState({ boardData: boardData, isBoardState: 'R' , totalItemsCount: boardDataLength})
   }
 
   handleEditBoard = (board, subject, content) => {
@@ -90,17 +101,63 @@ class App extends Component {
     this.setState({ boardData: boardData, isBoardState: 'R' });
   }
 
+  handlePageChange = (pageNumber) => {
+    console.log(`active page is ${pageNumber}`);
+    this.setState({ activePage: pageNumber });
+  }
+
+  handleGoToMain = () => {
+    this.setState({ isBoardState: 'R' });
+  }
+
+  handleDelBoard = (baord) => {
+    const board_ = baord;
+    const boardData = [...this.state.boardData];
+    const boardField = boardData.filter((board) => {
+      if (board_.key !== board.key){
+        return board;
+      }
+    });
+    console.log(board_);
+    console.log(boardData);
+    const boardDataLength = boardData.length;
+    this.setState({ boardData: boardField, isBoardState: 'R' , totalItemsCount: boardDataLength});
+  }
+
   render() {
     return (
       <>
         <Container>
           <Row>
-            <Nav />
+            <Nav onGoToMain={ this.handleGoToMain}/>
           </Row>
-        </Container>
+        </Container> 
         <Container>
-          {(this.state.isBoardState === 'R') && <Row><Board boardData={this.state.boardData} search={this.state.search} onSearch={this.handleSearch} onWrite={this.handleWrite} onEditModeBoard={this.handleEditModeBoard} /></Row>}
-          {(this.state.isBoardState === 'W' || this.state.isBoardState === 'U') && <Row><BoardEdit isBoardState={this.state.isBoardState} editBoard={this.state.editBoard} onAddBoard={this.handleAddBoard} onEditBoard={this.handleEditBoard} /></Row>}
+          {(this.state.isBoardState === 'R') &&
+            <Row>
+              <Board
+                boardData={this.state.boardData}
+                search={this.state.search}
+                onSearch={this.handleSearch}
+                onWrite={this.handleWrite}
+                onEditModeBoard={this.handleEditModeBoard}
+                onPageChange={this.handlePageChange}
+                activePage={this.state.activePage}
+                itemsCountPerPage={this.state.itemsCountPerPage}
+                totalItemsCount={this.state.totalItemsCount}
+                pageRangeDisplayed = {this.state.pageRangeDisplayed}
+                onDelBoard={ this.handleDelBoard}
+                />
+            </Row>}
+          {(this.state.isBoardState === 'W' || this.state.isBoardState === 'U') &&
+            <Row>
+              <BoardEdit
+                isBoardState={this.state.isBoardState}
+                editBoard={this.state.editBoard}
+                onAddBoard={this.handleAddBoard}
+                onEditBoard={this.handleEditBoard}
+              />
+            </Row>}
         </Container>
       </>
     );

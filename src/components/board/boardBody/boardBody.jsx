@@ -9,6 +9,10 @@ class BoardBody extends Component {
         this.props.onEditModeBoard(baord);
     }
 
+    handleDelBoard = (baord) => {
+        this.props.onDelBoard(baord);
+    }
+
     render() {
         const boardList = this.props.boardList;
         const { field, text } = this.props.search;
@@ -25,6 +29,9 @@ class BoardBody extends Component {
             }
             return '';
         })
+        const activePage = this.props.activePage;
+        const itemFirstIndex = (activePage - 1) * 10;
+        const itemLastIdex = (activePage*10) -1
         return (
             <Table striped bordered hover>
                 <colgroup>
@@ -45,7 +52,16 @@ class BoardBody extends Component {
                 </thead>
                 <tbody>
                     {
-                        filterBoardList.map((board, index) => <BoardContent key={board.key} index={index + 1} board={board} onEditModeBoard={this.handleEditModeBoard} />)
+                        filterBoardList.map((board, index) => {
+                            if (itemFirstIndex <= index && itemLastIdex >= index) {
+                                return <BoardContent
+                                    key={board.key}
+                                    index={index + 1}
+                                    board={board}
+                                    onEditModeBoard={this.handleEditModeBoard}
+                                    onDelBoard={ this.handleDelBoard}/>
+                            }
+                        })
                     }
                 </tbody>
             </Table>
