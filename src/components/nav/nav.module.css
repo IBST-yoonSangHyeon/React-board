@@ -1,2 +1,8 @@
-.center {text-align: center;}
-h1.subject {border: 8px outset #adacac; text-align: center};
+.center {
+  text-align: center;
+}
+h1.subject {
+  border: 8px outset #adacac;
+  text-align: center;
+  cursor: pointer;
+}
