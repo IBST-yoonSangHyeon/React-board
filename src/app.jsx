@@ -1,6 +1,6 @@
 import './app.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button, Container, Row } from 'react-bootstrap';
+import {  Container, Row } from 'react-bootstrap';
 import Nav from './components/nav/nav';
 import { Component } from 'react';
 import Board from './components/board/board';
